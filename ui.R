@@ -6,9 +6,10 @@ library(usmap)
 library(stringr)
 
 fluidPage(title="US Energy app",
+          
           navbarPage(
             
-            title = "Nav",
+            title = "Navigation",
             id = "nav",
             position = "static-top",
             collapsible = TRUE,
@@ -16,6 +17,9 @@ fluidPage(title="US Energy app",
             tabPanel(
               title = "About",
               tags$div(
+                tags$style(type = 'text/css',
+                           '.container-fluid {background-color: black; color: white}'
+                           ),
                 tags$h1("Welcome to Project 1 of CS 424!", `style` = "text-align:center"),
                 tags$h4("Created by: Parasdeep (Spring 2021)", `style` = "text-align:right"),
                 tags$u(tags$h3("Purpose:", `style` = "font-weight:bold")),
