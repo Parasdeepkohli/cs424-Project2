@@ -5,6 +5,7 @@ pos_only <- function(x){
   }
   return (x)
 }
+source(Find_primary.R)
 
 preprocess <- function(path){
 
@@ -52,7 +53,20 @@ preprocess <- function(path){
     input_data$Percent_renew <- (input_data$Total_renew / input_data$Total) * 100
     input_data$Percent_nonRenew <- (input_data$Total_nonRenew / input_data$Total) * 100
     
-  row.names(input_data) <- NULL  
-  return(input_data)
+  
+    
+ 
 
+  # Block to add primary and secondary energy source(s)
+  
+  input_data$PrimarySource <- rep(0, nrow(input_data))
+  for (row in 1:nrow(input_data)){
+    
+    input_data[row, "PrimarySource"] <- primary(input_data[row, 5:14])
+    
+  }
+  input_data$PrimarySource <- as.factor(input_data$PrimarySource)
+  
+  row.names(input_data) <- NULL  
+  return(input_data)  
 }
