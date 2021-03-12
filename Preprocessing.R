@@ -64,8 +64,9 @@ preprocess <- function(path){
   for (row in 1:nrow(input_data)){
     
     input_data[row, "PrimarySource"] <- primary(input_data[row, 5:14])
-    
+
   }
+  
   input_data$PrimarySource <- as.factor(input_data$PrimarySource)
   
   row.names(input_data) <- NULL  
