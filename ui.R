@@ -38,10 +38,26 @@ fluidPage(title="US Energy app",
                 tags$li("Both of the second graphs in compare states are 'squished' due to the legend size. X-axis labels become distorted",`style` = "font-size:20px"))
         
     ),
-    tabPanel(
-      tags$head(tags$style("#map{height:75vh !important;}")),
-      title = "Illinois 2018",
-      leafletOutput("map")
+    tabPanel("Illinois 2018",
+      sidebarLayout(
+        sidebarPanel(
+          width = 2,
+          tags$head(tags$style("#mapIL{height:90vh !important;}")),
+          checkboxGroupInput(
+            inputId = "SourcesIL", 
+            label = "Pick the sources", 
+            choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind")
+          ),
+          checkboxInput(inputId = 'allIL', label = 'All', value = TRUE),
+          actionButton("reset_button", "Reset view"),
+          tags$h5("Many plants do not output any energy. They are represented by the *None* source")
+        ),
+        mainPanel(
+          width = 10,
+          title = "Illinois 2018",
+          leafletOutput("mapIL")
+        )
+      )
     )
   )
 )

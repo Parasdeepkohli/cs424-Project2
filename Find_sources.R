@@ -32,6 +32,8 @@ sources <- function(x){
     }
     
   }
-  
+  else{
+    labels[1] <- "None"
+  }
   return (labels[!is.na(labels)])
 }

@@ -5,8 +5,8 @@ pos_only <- function(x){
   }
   return (x)
 }
-source(Find_primary.R)
-source(Find_sources.R)
+source("Find_primary.R")
+source("Find_sources.R")
 
 preprocess <- function(path){
 
@@ -61,14 +61,15 @@ preprocess <- function(path){
   # Block to add primary and secondary energy source(s)
   
   input_data$PrimarySource <- rep(0, nrow(input_data))
+  s <- list()
   for (row in 1:nrow(input_data)){
     
     input_data[row, "PrimarySource"] <- primary(input_data[row, 5:14])
-
+    s[[input_data[row, "PNAME"]]] <- sources(input_data[row, 5:14])
   }
   
   input_data$PrimarySource <- as.factor(input_data$PrimarySource)
   
   row.names(input_data) <- NULL  
-  return(input_data)  
+  return (list(input_data, s)) 
 }
