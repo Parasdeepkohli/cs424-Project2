@@ -25,6 +25,7 @@ fluidPage(title="Raw power by plant (US)",
         tags$u(tags$h3("Notes and tips:", `style` = "font-weight:bold")),
         tags$ul(tags$li("Please use the navbar above to navigate the app", `style` = "font-size:20px"),
                 tags$li("Please be patient! The intial load time will take several seconds, but the app will run smoothly afterwards", `style` = "font-size:20px"),
+                tags$li("The source US-Total will transform the map into the entire country. It is at the bottom of both state inputs in Compare States", `style` = "font-size:20px"),
                 tags$li("The minimum and maximum sliders affect both zones in compare states", `style` = "font-size:20px"),
                 tags$li("Compare states will either show a blank slate, or the world map, in case your filters do not match any data points", `style` = "font-size:20px"))
         
@@ -130,8 +131,8 @@ fluidPage(title="Raw power by plant (US)",
                                                  choices = c("Hard boundries (B&W)", "Muted boundries", "Nat geo (Detailed)"),
                                                  selected = "Muted boundries"),
                                      
-                                     actionButton("reset_button1", "Reset top map zoom"),
-                                     actionButton("reset_button2", "Reset bottom map zoom")
+                                     actionButton("reset_button1", "Reset top view"),
+                                     actionButton("reset_button2", "Reset bot view")
                                      ),
                         mainPanel()
                       )
