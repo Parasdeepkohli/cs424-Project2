@@ -10,6 +10,10 @@ Once you get Rstudio installed, please install the following libraries using the
 - Shiny
 - leaflet
 
+Package links:
+
+https://shiny.rstudio.com
+https://rstudio.github.io/leaflet/
 
 Steps to link this application to your Shiny account:
 
@@ -27,7 +31,6 @@ You'll need to link your Shiny account to Rstudio before publishing. The steps t
 3. In the "publishing" tab, select "connect"
 
 In case you do not have an account, please visit "Shinyapps.io" and create one before following the above steps
-
 
 Credits for code snippets (Only needed minor modifications to fit my solution. These guys are awesome!):
 
