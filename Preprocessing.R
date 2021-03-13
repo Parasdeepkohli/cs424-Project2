@@ -54,17 +54,28 @@ preprocess <- function(path){
     input_data$Percent_renew <- (input_data$Total_renew / input_data$Total) * 100
     input_data$Percent_nonRenew <- (input_data$Total_nonRenew / input_data$Total) * 100
     
-  
     
  
 
   # Block to add primary and secondary energy source(s)
   
   input_data$PrimarySource <- rep(0, nrow(input_data))
+  input_data$PrimaryValue <- rep(0, nrow(input_data))
+  input_data$Radius <- rep(0, nrow(input_data))
   s <- list()
   for (row in 1:nrow(input_data)){
     
-    input_data[row, "PrimarySource"] <- primary(input_data[row, 5:14])
+    p <- primary(input_data[row, 5:14])
+    psource <- p[[1]]
+    pval <- p[[2]]
+    if (psource == "None"){
+      input_data[row, "Radius"] <- 5
+    }
+    else{
+    input_data[row, "Radius"] <- floor(log10(pval) + 1) * 10
+    }
+    input_data[row, "PrimarySource"] <- psource
+    input_data[row, "PrimaryValue"] <- pval
     s[[input_data[row, "PNAME"]]] <- sources(input_data[row, 5:14])
   }
   

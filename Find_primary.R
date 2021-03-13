@@ -26,5 +26,5 @@ primary <- function(x) {
                                                                 ifelse(maxind == 9, "Geothermal", "Other"
                                         )))))))))
   }
-  return(label)
+  return(c(label, maxval))
 }

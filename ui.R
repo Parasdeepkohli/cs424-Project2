@@ -46,7 +46,7 @@ fluidPage(title="US Energy app",
           checkboxGroupInput(
             inputId = "SourcesIL", 
             label = "Pick the sources", 
-            choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind")
+            choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
           ),
           checkboxInput(inputId = 'allIL', label = 'All', value = TRUE),
           actionButton("reset_button", "Reset view"),
@@ -67,23 +67,27 @@ fluidPage(title="US Energy app",
                            checkboxGroupInput(
                              inputId = "Sources1", 
                              label = "Top map sources", 
-                             choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind")
+                             choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
                           ),
                           checkboxInput(inputId = 'all1', label = 'All', value = TRUE),
-                         checkboxGroupInput(
+                          checkboxInput(inputId = "merge", label = "Link options", value = FALSE),
+                          conditionalPanel(condition = "input.merge == false",
+                           checkboxGroupInput(
                            inputId = "Sources2", 
                            label = "Bottom map sources", 
-                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind")
+                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
                           ),
                          checkboxInput(inputId = 'all2', label = 'All', value = TRUE)
-                         ),
+                         )
+                        ),
                         mainPanel()
                       )
                ),
                column(width = 8,
-                      tags$head(tags$style("#map1{height:45vh !important;}
-                                            #map2{height:45vh !important;")),
+                      tags$head(tags$style("#map1{height:42vh !important;}
+                                            #map2{height:42vh !important;")),
                        leafletOutput("map1"),
+                       sidebarLayout(sidebarPanel(width = 0), mainPanel(width = 12)),
                        leafletOutput("map2")
                       
                ),
@@ -96,28 +100,42 @@ fluidPage(title="US Energy app",
                                                  selected = 2000),
                                      selectInput(inputId = "State1",
                                                  label = "Top map state",
-                                                 choices = state.name,
+                                                 choices = c(state.name, "US-Total"),
                                                  selected = "Illinois"),
                                      selectInput(inputId = "style1",
                                                  label = "Top map style",
-                                                 choices = c("Toner (B&W)"),
-                                                 selected = "Toner (B&W)"),
+                                                 choices = c("Hard boundries (B&W)", "Muted boundries", "Nat geo (Detailed)"),
+                                                 selected = "Muted boundries"),
                                      selectInput(inputId = "Year2",
                                                  label = "Bottom map year",
                                                  choices = c(2000, 2010, 2018),
                                                  selected = 2018),
                                      selectInput(inputId = "State2",
                                                  label = "Bottom map state",
-                                                 choices = state.name,
+                                                 choices = c(state.name, "US-Total"),
                                                  selected = "Illinois"),
                                      selectInput(inputId = "style2",
                                                  label = "Bottom map style",
-                                                 choices = c("Toner (B&W)"),
-                                                 selected = "Toner (B&W)"),
+                                                 choices = c("Hard boundries (B&W)", "Muted boundries", "Nat geo (Detailed)"),
+                                                 selected = "Muted boundries"),
                                      
                                      actionButton("reset_button1", "Reset top map zoom"),
                                      actionButton("reset_button2", "Reset bottom map zoom"),
                                      
+                                     sliderInput(
+                                       inputId <- "MinSlider",
+                                       label <- "Minimum Energy Generation",
+                                       min = 0,
+                                       max = 32000000,
+                                       value = 0
+                                     ),
+                                     sliderInput(
+                                       inputId <- "MaxSlider",
+                                       label <- "Maximum Energy Generation",
+                                       min = 0,
+                                       max = 32000000,
+                                       value = 32000000
+                                     )
                                      ),
                         mainPanel()
                       )

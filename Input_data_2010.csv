@@ -1,4 +1,4 @@
-﻿PSTATABB,PNAME,LAT,LON,Coal,Oil,Gas,Nuclear,Hydro,Biomass,Wind,Solar,Geothermal,Other fossil,Other unknown
+﻿PSTATEABB,PNAME,LAT,LON,Coal,Oil,Gas,Nuclear,Hydro,Biomass,Wind,Solar,Geothermal,Other fossil,Other unknown
 AK,Alakanuk,62.6833,-164.6544,0,"1,859.00",0,0,0,0,0,0,0,0,0
 AK,Anchorage 1,61.2328,-149.8909,0,366.5,"55,061.50",0,0,0,0,0,0,0,0
 AK,Angoon,57.8425,-134.9772,0,"1,928.00",0,0,0,0,0,0,0,0,0
