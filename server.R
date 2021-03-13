@@ -9,10 +9,12 @@ function(input, output, session){
   
   source("Preprocessing.R")
 
-  results <- preprocess("Input_data_2018.csv")
+  results2018 <- preprocess("Input_data_2018.csv")
+  #results2010 <- preprocess("Input_data_2010.csv")
+  results2000 <- preprocess("Input_data_2000.csv")
 
-  input_data_2018 <- results[[1]]
-  s <- results[[2]]
+  input_data_2018 <- results2018[[1]]
+  s2018 <- results2018[[2]]
   
   initial_lat = 40.011111
   initial_lng = -89.047222
@@ -31,7 +33,7 @@ function(input, output, session){
     addProviderTiles(providers$Stamen.Toner) %>%
     addCircleMarkers(label = ~as.character(paste0(PNAME, " (Main Source: ", PrimarySource, ")")), color = ~factpal(PrimarySource), fillOpacity = 1, 
                      labelOptions = labelOptions(textsize = "15px"),
-                     popup = ~as.character(paste0("All Sources: ", s[PNAME])),
+                     popup = ~as.character(paste0("All Sources: ", s2018[PNAME])),
                      popupOptions = popupOptions(textsize = "15px")) %>%
       addLegend("bottomright", pal = factpal, values = ~PrimarySource,
                 title = "Primary energy Source",
@@ -39,6 +41,7 @@ function(input, output, session){
       )
     
   })
+  
   
   observe({
     updateCheckboxGroupInput(

@@ -13,7 +13,7 @@ fluidPage(title="US Energy app",
     id = "nav",
     position = "static-top",
     collapsible = TRUE,
-    selected = "Illinois 2018",
+    selected = "Compare states",
     tabPanel(
       title = "About",
         tags$h1("Welcome to Project 2 of CS 424!", `style` = "text-align:center"),
@@ -57,6 +57,72 @@ fluidPage(title="US Energy app",
           title = "Illinois 2018",
           leafletOutput("mapIL")
         )
+      )
+    ),
+    tabPanel("Compare states",
+             fluidRow(
+               column(2,
+                      sidebarLayout(
+                        sidebarPanel(width = 12,
+                           checkboxGroupInput(
+                             inputId = "Sources1", 
+                             label = "Top map sources", 
+                             choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind")
+                          ),
+                          checkboxInput(inputId = 'all1', label = 'All', value = TRUE),
+                         checkboxGroupInput(
+                           inputId = "Sources2", 
+                           label = "Bottom map sources", 
+                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind")
+                          ),
+                         checkboxInput(inputId = 'all2', label = 'All', value = TRUE)
+                         ),
+                        mainPanel()
+                      )
+               ),
+               column(width = 8,
+                      tags$head(tags$style("#map1{height:45vh !important;}
+                                            #map2{height:45vh !important;")),
+                       leafletOutput("map1"),
+                       leafletOutput("map2")
+                      
+               ),
+               column(width = 2,
+                      sidebarLayout(
+                        sidebarPanel(width = 12,
+                                     selectInput(inputId = "Year1",
+                                                 label = "Top map year",
+                                                 choices = c(2000, 2010, 2018),
+                                                 selected = 2000),
+                                     selectInput(inputId = "State1",
+                                                 label = "Top map state",
+                                                 choices = state.name,
+                                                 selected = "Illinois"),
+                                     selectInput(inputId = "style1",
+                                                 label = "Top map style",
+                                                 choices = c("Toner (B&W)"),
+                                                 selected = "Toner (B&W)"),
+                                     selectInput(inputId = "Year2",
+                                                 label = "Bottom map year",
+                                                 choices = c(2000, 2010, 2018),
+                                                 selected = 2018),
+                                     selectInput(inputId = "State2",
+                                                 label = "Bottom map state",
+                                                 choices = state.name,
+                                                 selected = "Illinois"),
+                                     selectInput(inputId = "style2",
+                                                 label = "Bottom map style",
+                                                 choices = c("Toner (B&W)"),
+                                                 selected = "Toner (B&W)"),
+                                     
+                                     actionButton("reset_button1", "Reset top map zoom"),
+                                     actionButton("reset_button2", "Reset bottom map zoom"),
+                                     
+                                     ),
+                        mainPanel()
+                      )
+               )
+        
       )
     )
   )
