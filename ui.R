@@ -5,37 +5,32 @@ library(scales)
 library(leaflet)
 library(stringr)
 
-fluidPage(title="US Energy app",
-        
+fluidPage(title="Raw power by plant (US)",
+          
   navbarPage(
     
     title = "Navigation",
     id = "nav",
     position = "static-top",
     collapsible = TRUE,
-    selected = "Compare states",
+    selected = "About",
     tabPanel(
       title = "About",
         tags$h1("Welcome to Project 2 of CS 424!", `style` = "text-align:center"),
         tags$h4("Created by: Parasdeep (Spring 2021)", `style` = "text-align:right"),
         tags$u(tags$h3("Purpose:", `style` = "font-weight:bold")),
-        tags$ul(tags$li("Visualize the energy produced by various sources in the U.S.A (Basic Visualizations)", `style` = "font-size:20px"),
-                tags$li("Compare the energy produced by various sources between any two states",`style` = "font-size:20px"),
-                tags$li("Geographically visualize variance in energy production across the country", `style` = "font-size:20px")),
+        tags$ul(tags$li("Visualize the energy produced by plants across the state of Illinois (Illinois 2018)", `style` = "font-size:20px"),
+                tags$li("Compare the energy produced by plants between any two states (Compare states)",`style` = "font-size:20px"),
+                tags$li("Geographically visualize variance in energy production across the entire country (Compare states)", `style` = "font-size:20px")),
         tags$u(tags$h3("The Data:", `style` = "font-weight:bold")),
-        tags$ul(tags$li("A CSV file detailing the energy produced in the U.S.A from 1990 - 2019", `style` = "font-size:20px"),
-                tags$li("The data divides energy production by the following categories: Year, State, Producer, and source",`style` = "font-size:20px"),
-                tags$li("Please find the link to the data source here:", tags$a(`href` = "https://www.eia.gov/electricity/data/state/", "Source"), `style` = "font-size:20px")),
-        tags$u(tags$h3("Guide:", `style` = "font-weight:bold")),
+        tags$ul(tags$li("Three excel files detailing the energy produced by plants across the U.S.A in the years 2000, 2010 and 2018", `style` = "font-size:20px"),
+                tags$li("Each file provides the plant name, location (LAT and LON), and energy produced divided by energy source",`style` = "font-size:20px"),
+                tags$li("Please find the link to the data sources here:", tags$a(`href` = "https://www.epa.gov/egrid/download-data", "Source"), `style` = "font-size:20px")),
+        tags$u(tags$h3("Notes and tips:", `style` = "font-weight:bold")),
         tags$ul(tags$li("Please use the navbar above to navigate the app", `style` = "font-size:20px"),
-                tags$li("Base Visualizations: Full page dedicated to a single visualization",`style` = "font-size:20px"),
-                tags$li("Compare: Base visualizations with comparisons between states through filters", `style` = "font-size:20px"),
-                tags$li("US map: Inside Compare, change tabs to geographical comparison of data", `style` = "font-size:20px"),
-                tags$li("If you receive an error in Compare, it means that no data is available for that combination of filters", `style` = "font-size:20px")),
-        tags$u(tags$h3("Known bugs:", `style` = "font-weight:bold")),
-        tags$ul(tags$li("Choosing a source/year/state combination that has no corresponding value in the data returns an error", `style` = "font-size:20px"),
-                tags$li("If your choices result in a single observation, the y-ticks will be bugged and repeat the same value",`style` = "font-size:20px"),
-                tags$li("Both of the second graphs in compare states are 'squished' due to the legend size. X-axis labels become distorted",`style` = "font-size:20px"))
+                tags$li("Please be patient! The intial load time will take several seconds, but the app will run smoothly afterwards", `style` = "font-size:20px"),
+                tags$li("The minimum and maximum sliders affect both zones in compare states", `style` = "font-size:20px"),
+                tags$li("Compare states will either show a blank slate, or the world map, in case your filters do not match any data points", `style` = "font-size:20px"))
         
     ),
     tabPanel("Illinois 2018",
@@ -61,33 +56,53 @@ fluidPage(title="US Energy app",
     ),
     tabPanel("Compare states",
              fluidRow(
-               column(2,
+               column(width = 3,
                       sidebarLayout(
                         sidebarPanel(width = 12,
-                           checkboxGroupInput(
-                             inputId = "Sources1", 
-                             label = "Top map sources", 
-                             choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
-                          ),
-                          checkboxInput(inputId = 'all1', label = 'All', value = TRUE),
-                          checkboxInput(inputId = "merge", label = "Link options", value = FALSE),
-                          conditionalPanel(condition = "input.merge == false",
-                           checkboxGroupInput(
-                           inputId = "Sources2", 
-                           label = "Bottom map sources", 
-                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
-                          ),
-                         checkboxInput(inputId = 'all2', label = 'All', value = TRUE)
+                                     fluidRow(
+                                       column(6,
+                                         checkboxGroupInput(
+                                           inputId = "Sources1", 
+                                           label = "Top map", 
+                                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+                                         ),
+                                           checkboxInput(inputId = 'all1', label = 'All', value = TRUE),
+                                           checkboxInput(inputId = "merge", label = "Link options", value = FALSE)
+                                       ),
+                                        column(6,
+                                          conditionalPanel(condition = "input.merge == false",
+                                           checkboxGroupInput(
+                                           inputId = "Sources2", 
+                                           label = "Bottom map", 
+                                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+                                           ),
+                                           checkboxInput(inputId = 'all2', label = 'All', value = TRUE)
+                                        )
+                                      )
+                                    ),
+                         sliderInput(
+                           inputId <- "MinSlider",
+                           label <- "Minimum Energy Generation",
+                           min = 0,
+                           max = 32000000,
+                           value = 0
+                         ),
+                         sliderInput(
+                           inputId <- "MaxSlider",
+                           label <- "Maximum Energy Generation",
+                           min = 0,
+                           max = 32000000,
+                           value = 32000000
                          )
                         ),
                         mainPanel()
                       )
                ),
-               column(width = 8,
-                      tags$head(tags$style("#map1{height:42vh !important;}
-                                            #map2{height:42vh !important;")),
+               column(width = 7,
+                      tags$head(tags$style("#map1{height:43vh !important;}
+                                            #map2{height:43vh !important;")),
                        leafletOutput("map1"),
-                       sidebarLayout(sidebarPanel(width = 0), mainPanel(width = 12)),
+                       br(),
                        leafletOutput("map2")
                       
                ),
@@ -120,22 +135,7 @@ fluidPage(title="US Energy app",
                                                  selected = "Muted boundries"),
                                      
                                      actionButton("reset_button1", "Reset top map zoom"),
-                                     actionButton("reset_button2", "Reset bottom map zoom"),
-                                     
-                                     sliderInput(
-                                       inputId <- "MinSlider",
-                                       label <- "Minimum Energy Generation",
-                                       min = 0,
-                                       max = 32000000,
-                                       value = 0
-                                     ),
-                                     sliderInput(
-                                       inputId <- "MaxSlider",
-                                       label <- "Maximum Energy Generation",
-                                       min = 0,
-                                       max = 32000000,
-                                       value = 32000000
-                                     )
+                                     actionButton("reset_button2", "Reset bottom map zoom")
                                      ),
                         mainPanel()
                       )

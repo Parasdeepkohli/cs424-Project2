@@ -27,7 +27,7 @@ function(input, output, session){
   Illinois_zoom = 7
   
   Illinois_data <- subset(input_data_2018, PSTATEABB == "IL")
-  factpal <- colorFactor(c('#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#800080'),
+  factpal <- colorFactor(c('#093eb0','#1f78b4','#496331','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#800080'),
                          domain = Illinois_data$PrimarySource)
   
   
