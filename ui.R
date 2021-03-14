@@ -38,7 +38,7 @@ fluidPage(title="Raw power by plant (US)",
           checkboxGroupInput(
             inputId = "SourcesIL", 
             label = "Pick the sources", 
-            choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+            choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
           ),
           checkboxInput(inputId = 'allIL', label = 'All', value = TRUE),
           actionButton("reset_button", "Reset view"),
@@ -61,7 +61,7 @@ fluidPage(title="Raw power by plant (US)",
                                          checkboxGroupInput(
                                            inputId = "Sources1", 
                                            label = "Top map", 
-                                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+                                           choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
                                          ),
                                            checkboxInput(inputId = 'all1', label = 'All', value = TRUE),
                                            checkboxInput(inputId = "merge", label = "Link options", value = FALSE)
@@ -71,7 +71,7 @@ fluidPage(title="Raw power by plant (US)",
                                            checkboxGroupInput(
                                            inputId = "Sources2", 
                                            label = "Bottom map", 
-                                           choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+                                           choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
                                            ),
                                            checkboxInput(inputId = 'all2', label = 'All', value = TRUE)
                                         )

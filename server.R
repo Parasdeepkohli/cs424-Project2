@@ -29,12 +29,27 @@ function(input, output, session){
   
   output$mapIL <- renderLeaflet({
     
+    for (row in 1:nrow(Illinois_data)){
+      
+      p <- primary(Illinois_data[row, input$SourcesIL])
+      pind <- p[[3]]
+      pval <- p[[2]]
+      
+      if (pval == 0){
+        Illinois_data[row, "PrimarySource"] <- "None"
+      }
+      else{
+        Illinois_data[row, "PrimarySource"] <- input$SourcesIL[pind]
+      }
+      
+      Illinois_data[row, "PrimaryValue"] <- pval
+    }
     
     Illinois_data <- Illinois_data[Illinois_data$PrimarySource %in% input$SourcesIL, ]
     
     leaflet(Illinois_data) %>%
     addProviderTiles(providers$Stamen.Toner) %>%
-    addCircleMarkers(label = ~as.character(paste0(PNAME, " (Main Source: ", PrimarySource, ")")), color = ~factpal(PrimarySource), fillOpacity = 1, 
+    addCircleMarkers(label = ~as.character(paste0(PNAME, " (Label Source: ", PrimarySource, ")", " Sources: ", s2018[PNAME])), color = ~factpal(PrimarySource), fillOpacity = 1, 
                      labelOptions = labelOptions(textsize = "15px"),
                      popup = ~as.character(paste0("All Sources: ", s2018[PNAME])),
                      popupOptions = popupOptions(textsize = "15px")) %>%
@@ -65,12 +80,31 @@ function(input, output, session){
     
     if (st != "US-Total"){map1_data <- subset(datafile, PSTATEABB == as.character(st))}
     else {map1_data <- datafile}
+    
+    for (row in 1:nrow(map1_data)){
+      
+      p <- primary(map1_data[row, input$Sources1])
+      pind <- p[[3]]
+      pval <- p[[2]]
+      
+      if (pval == 0){
+        map1_data[row, "Radius"] <- 0
+        map1_data[row, "PrimarySource"] <- "None"
+      }
+      else{
+        map1_data[row, "Radius"] <- floor(log10(pval) + 1) * 10
+        map1_data[row, "PrimarySource"] <- input$Sources1[pind]
+      }
+      map1_data[row, "PrimaryValue"] <- pval
+    }
+    
+    
     map1_data <- map1_data[map1_data$PrimarySource %in% input$Sources1, ]
     map1_data <- subset(map1_data, (input$MinSlider<= PrimaryValue) & ( PrimaryValue <= input$MaxSlider))
     
     leaflet(map1_data) %>%
       addProviderTiles(style) %>%
-      addCircleMarkers(label = ~as.character(paste0(PNAME, " || Main Source: ", PrimarySource, " || ", "Sources:", sfile[PNAME])), 
+      addCircleMarkers(label = ~as.character(paste0(PNAME, " || Label Source: ", PrimarySource, " || ", "Sources:", sfile[PNAME])), 
                        color = ~factpal2(PrimarySource), fillOpacity = 1, 
                        labelOptions = labelOptions(textsize = "16px"),
                        popup = ~as.character(paste(
@@ -132,12 +166,34 @@ function(input, output, session){
     
     if (st != "US-Total"){map2_data <- subset(datafile, PSTATEABB == as.character(st))}
     else {map2_data <- datafile}
+    
+    if (st != "US-Total"){map1_data <- subset(datafile, PSTATEABB == as.character(st))}
+    else {map1_data <- datafile}
+    
+    for (row in 1:nrow(map2_data)){
+      
+      p <- primary(map2_data[row, mySources])
+      pind <- p[[3]]
+      pval <- p[[2]]
+      
+      if (pval == 0){
+        map2_data[row, "Radius"] <- 0
+        map2_data[row, "PrimarySource"] <- "None"
+      }
+      else{
+        map2_data[row, "Radius"] <- floor(log10(pval) + 1) * 10
+        map2_data[row, "PrimarySource"] <- mySources[pind]
+      }
+      
+      map2_data[row, "PrimaryValue"] <- pval
+    }
+    
     map2_data <- map2_data[map2_data$PrimarySource %in% mySources, ]
     map2_data <- subset(map2_data, (input$MinSlider<= PrimaryValue) & ( PrimaryValue <= input$MaxSlider))
     
     leaflet(map2_data) %>%
       addProviderTiles(style) %>%
-      addCircleMarkers(label = ~as.character(paste0(PNAME, " || Main Source: ", PrimarySource, " || ", "Sources:", sfile[PNAME])), 
+      addCircleMarkers(label = ~as.character(paste0(PNAME, " || Label Source: ", PrimarySource, " || ", "Sources:", sfile[PNAME])), 
                        color = ~factpal2(PrimarySource), fillOpacity = 1, 
                        labelOptions = labelOptions(textsize = "16px"),
                        popup = ~as.character(paste(
@@ -178,7 +234,7 @@ function(input, output, session){
   
   observe({
     updateCheckboxGroupInput(
-      session, 'SourcesIL', choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      session, 'SourcesIL', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
       selected = if (input$allIL) c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
       
     )
@@ -186,7 +242,7 @@ function(input, output, session){
   
   observe({
     updateCheckboxGroupInput(
-      session, 'Sources1', choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      session, 'Sources1', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
       selected = if (input$all1) c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
       
     )
@@ -194,7 +250,7 @@ function(input, output, session){
   
   observe({
     updateCheckboxGroupInput(
-      session, 'Sources2', choices = c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      session, 'Sources2', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
       selected = if (input$all2) c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
       
     )

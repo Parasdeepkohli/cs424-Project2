@@ -62,6 +62,8 @@ preprocess <- function(path){
   input_data$PrimarySource <- rep(0, nrow(input_data))
   input_data$PrimaryValue <- rep(0, nrow(input_data))
   input_data$Radius <- rep(0, nrow(input_data))
+  
+  
   s <- list()
   for (row in 1:nrow(input_data)){
     
