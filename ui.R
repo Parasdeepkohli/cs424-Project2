@@ -27,7 +27,7 @@ fluidPage(title="Raw power by plant (US)",
                 tags$li("Please be patient! The intial load time will take several seconds, but the app will run smoothly afterwards", `style` = "font-size:20px"),
                 tags$li("The source US-Total will transform the map into the entire country. It is at the bottom of both state inputs in Compare States", `style` = "font-size:20px"),
                 tags$li("The minimum and maximum sliders affect both zones in compare states", `style` = "font-size:20px"),
-                tags$li("Compare states will either show a blank slate, or the world map, in case your filters do not match any data points", `style` = "font-size:20px"))
+                tags$li("The application will either show a blank slate, or an error, in case your filters do not match any data points", `style` = "font-size:20px"))
         
     ),
     tabPanel("Illinois 2018",
