@@ -69,7 +69,7 @@ preprocess <- function(path){
     
     p <- primary(input_data[row, 5:14])
     psource <- p[[1]]
-    pval <- p[[2]]
+    pval <- as.numeric(p[[2]])
     if (psource == "None"){
       input_data[row, "Radius"] <- 5
     }

@@ -44,8 +44,7 @@ fluidPage(title="Raw power by plant (US)",
           actionButton(inputId = 'renewableIL', label = 'Renewable'),
           actionButton(inputId = 'nonrenewIL', label = 'Non-Renew'),
           br(),
-          actionButton("reset_button", "Reset view"),
-          tags$h5("Many plants do not output any energy. They are represented by the *None* source")
+          actionButton("reset_button", "Reset view")
         ),
         mainPanel(
           width = 10,

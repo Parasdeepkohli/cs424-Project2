@@ -1,13 +1,15 @@
 primary <- function(x) {
   
-  maxval = x[1]
-  maxind = 1
+  maxval <- x[1]
+  maxind <- 1
   
-  for (i in 2:length(x)){
-    if (x[i] > maxval){
-      maxval <- x[i]
-      maxind <- i
-    } 
+  if (length(x) > 1) {
+    for (i in 2:length(x)){
+      if (x[i] > maxval){
+        maxval <- x[i]
+        maxind <- i
+      } 
+    }
   }
   
   

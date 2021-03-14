@@ -32,8 +32,8 @@ function(input, output, session){
     for (row in 1:nrow(Illinois_data)){
       
       p <- primary(Illinois_data[row, input$SourcesIL])
-      pind <- p[[3]]
-      pval <- p[[2]]
+      pind <- as.numeric(p[[3]])
+      pval <- as.numeric(p[[2]])
       
       if (pval == 0){
         Illinois_data[row, "PrimarySource"] <- "None"
@@ -84,8 +84,8 @@ function(input, output, session){
     for (row in 1:nrow(map1_data)){
       
       p <- primary(map1_data[row, input$Sources1])
-      pind <- p[[3]]
-      pval <- p[[2]]
+      pind <- as.numeric(p[[3]])
+      pval <- as.numeric(p[[2]])
       
       if (pval == 0){
         map1_data[row, "Radius"] <- 0
@@ -136,7 +136,7 @@ function(input, output, session){
                        popupOptions = popupOptions(textsize = "20px"),
                        radius = ~sqrt(map1_data$Radius)) %>%
       addLegend("bottomright", pal = factpal2, values = ~PrimarySource,
-                title = paste0("Energy Source (", input$Year1, ")"),
+                title = paste0("Energy Source (",st, " ", input$Year1, ")"),
                 opacity = 1
       )
     
@@ -174,8 +174,8 @@ function(input, output, session){
     for (row in 1:nrow(map2_data)){
       
       p <- primary(map2_data[row, mySources])
-      pind <- p[[3]]
-      pval <- p[[2]]
+      pind <- as.numeric(p[[3]])
+      pval <- as.numeric(p[[2]])
       
       if (pval == 0){
         map2_data[row, "Radius"] <- 0
@@ -226,7 +226,7 @@ function(input, output, session){
                        popupOptions = popupOptions(textsize = "20px"),
                        radius = ~sqrt(map2_data$Radius)) %>%
       addLegend("bottomright", pal = factpal2, values = ~PrimarySource,
-                title = paste0("Energy Source (", input$Year2, ")"),
+                title = paste0("Energy Source (", st, " ", input$Year2, ")"),
                 opacity = 1
       )
     
