@@ -107,7 +107,7 @@ function(input, output, session){
       addProviderTiles(style) %>%
       addCircleMarkers(label = ~as.character(paste0(PNAME, " || Label Source: ", PrimarySource, " || ", "Sources:", sfile[PNAME])), 
                        color = ~factpal2(PrimarySource), fillOpacity = 1, 
-                       labelOptions = labelOptions(textsize = "16px"),
+                       labelOptions = labelOptions(textsize = "15px"),
                        popup = ~as.character(paste(
                          "Percentage renewable: ", map1_data$Percent_renew,
                          "% ",
@@ -135,7 +135,7 @@ function(input, output, session){
                          " Mwh")),
                        popupOptions = popupOptions(textsize = "20px"),
                        radius = ~sqrt(map1_data$Radius)) %>%
-      addLegend("topright", pal = factpal2, values = ~PrimarySource,
+      addLegend("bottomright", pal = factpal2, values = ~PrimarySource,
                 title = paste0("Energy Source (", input$Year1, ")"),
                 opacity = 1
       )
@@ -197,7 +197,7 @@ function(input, output, session){
       addProviderTiles(style) %>%
       addCircleMarkers(label = ~as.character(paste0(PNAME, " || Label Source: ", PrimarySource, " || ", "Sources:", sfile[PNAME])), 
                        color = ~factpal2(PrimarySource), fillOpacity = 1, 
-                       labelOptions = labelOptions(textsize = "16px"),
+                       labelOptions = labelOptions(textsize = "15px"),
                        popup = ~as.character(paste(
                          "Percentage renewable: ", map2_data$Percent_renew,
                          "% ",
@@ -225,7 +225,7 @@ function(input, output, session){
                          " Mwh")),
                        popupOptions = popupOptions(textsize = "20px"),
                        radius = ~sqrt(map2_data$Radius)) %>%
-      addLegend("topright", pal = factpal2, values = ~PrimarySource,
+      addLegend("bottomright", pal = factpal2, values = ~PrimarySource,
                 title = paste0("Energy Source (", input$Year2, ")"),
                 opacity = 1
       )
