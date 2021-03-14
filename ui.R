@@ -41,6 +41,9 @@ fluidPage(title="Raw power by plant (US)",
             choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
           ),
           checkboxInput(inputId = 'allIL', label = 'All', value = TRUE),
+          actionButton(inputId = 'renewableIL', label = 'Renewable'),
+          actionButton(inputId = 'nonrenewIL', label = 'Non-Renew'),
+          br(),
           actionButton("reset_button", "Reset view"),
           tags$h5("Many plants do not output any energy. They are represented by the *None* source")
         ),
@@ -64,6 +67,8 @@ fluidPage(title="Raw power by plant (US)",
                                            choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
                                          ),
                                            checkboxInput(inputId = 'all1', label = 'All', value = TRUE),
+                                           actionButton(inputId = 'renewable1', label = 'Renewable'),
+                                           actionButton(inputId = 'nonrenew1', label = 'Non-Renew'), 
                                            checkboxInput(inputId = "merge", label = "Link options", value = FALSE)
                                        ),
                                         column(6,
@@ -73,7 +78,9 @@ fluidPage(title="Raw power by plant (US)",
                                            label = "Bottom map", 
                                            choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
                                            ),
-                                           checkboxInput(inputId = 'all2', label = 'All', value = TRUE)
+                                           checkboxInput(inputId = 'all2', label = 'All', value = TRUE),
+                                           actionButton(inputId = 'renewable2', label = 'Renewable'),
+                                           actionButton(inputId = 'nonrenew2', label = 'Non-Renew'),
                                         )
                                       )
                                     ),

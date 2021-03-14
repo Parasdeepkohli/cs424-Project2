@@ -40,19 +40,19 @@ preprocess <- function(path){
   
   # Block to add percent columns
     
-    input_data$Percent_Coal <- (input_data$Coal / input_data$Total) * 100
-    input_data$Percent_Oil <- (input_data$Oil / input_data$Total) * 100
-    input_data$Percent_Gas <- (input_data$Gas / input_data$Total) * 100
-    input_data$Percent_Nuclear <- (input_data$Nuclear / input_data$Total) * 100
-    input_data$Percent_Hydro <- (input_data$Hydro / input_data$Total) * 100
-    input_data$Percent_Biomass <- (input_data$Biomass / input_data$Total) * 100
-    input_data$Percent_Wind <- (input_data$Wind / input_data$Total) * 100
-    input_data$Percent_Solar <- (input_data$Solar / input_data$Total) * 100
-    input_data$Percent_Geothermal <- (input_data$Geothermal / input_data$Total) * 100
-    input_data$Percent_Other <- (input_data$Other / input_data$Total) * 100
+    input_data$Percent_Coal <- format(round((input_data$Coal / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Oil <- format(round((input_data$Oil / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Gas <- format(round((input_data$Gas / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Nuclear <- format(round((input_data$Nuclear / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Hydro <- format(round((input_data$Hydro / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Biomass <- format(round((input_data$Biomass / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Wind <- format(round((input_data$Wind / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Solar <- format(round((input_data$Solar / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Geothermal <- format(round((input_data$Geothermal / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_Other <- format(round((input_data$Other / input_data$Total) * 100, 2), nsmall = 2)
     
-    input_data$Percent_renew <- (input_data$Total_renew / input_data$Total) * 100
-    input_data$Percent_nonRenew <- (input_data$Total_nonRenew / input_data$Total) * 100
+    input_data$Percent_renew <- format(round((input_data$Total_renew / input_data$Total) * 100, 2), nsmall = 2)
+    input_data$Percent_nonRenew <- format(round((input_data$Total_nonRenew / input_data$Total) * 100, 2), nsmall = 2)
     
     
  

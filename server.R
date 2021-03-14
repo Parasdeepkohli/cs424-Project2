@@ -92,8 +92,9 @@ function(input, output, session){
         map1_data[row, "PrimarySource"] <- "None"
       }
       else{
-        map1_data[row, "Radius"] <- floor(log10(pval) + 1) * 10
         map1_data[row, "PrimarySource"] <- input$Sources1[pind]
+        if (st == "US-Total"){map1_data[row, "Radius"] <- sqrt(floor(log10(pval) + 1) * 10)}
+        else{map1_data[row, "Radius"] <- floor(log10(pval) + 1) * 10}
       }
       map1_data[row, "PrimaryValue"] <- pval
     }
@@ -181,8 +182,9 @@ function(input, output, session){
         map2_data[row, "PrimarySource"] <- "None"
       }
       else{
-        map2_data[row, "Radius"] <- floor(log10(pval) + 1) * 10
         map2_data[row, "PrimarySource"] <- mySources[pind]
+        if (st == "US-Total"){map2_data[row, "Radius"] <- sqrt(floor(log10(pval) + 1) * 10)}
+        else{map2_data[row, "Radius"] <- floor(log10(pval) + 1) * 10}
       }
       
       map2_data[row, "PrimaryValue"] <- pval
@@ -231,27 +233,82 @@ function(input, output, session){
     
   })
   
+  observe({
+    
+    updateCheckboxGroupInput(
+      session, 'SourcesIL', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      selected = if (input$renewableIL) c("Biomass", "Hydro", "Solar", "Wind", "Geothermal")
+    )
+    
+  })
+  
+  observe({
+    
+    updateCheckboxGroupInput(
+      session, 'SourcesIL', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      selected = if (input$nonrenewIL) c("Coal", "Gas", "Nuclear", "Oil", "Other")
+    )
+    
+  })
   
   observe({
     updateCheckboxGroupInput(
       session, 'SourcesIL', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
-      selected = if (input$allIL) c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+      selected = if (input$allIL) c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
       
     )
+  })
+  
+  observe({
+    
+    updateCheckboxGroupInput(
+      session, 'Sources1', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      selected = if (input$renewable1) c("Biomass", "Hydro", "Solar", "Wind", "Geothermal")
+    )
+    
+    
+  })
+  
+  
+  observe({
+    
+    updateCheckboxGroupInput(
+      session, 'Sources1', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      selected = if (input$nonrenew1) c("Coal", "Gas", "Nuclear", "Oil", "Other")
+    )
+    
   })
   
   observe({
     updateCheckboxGroupInput(
       session, 'Sources1', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
-      selected = if (input$all1) c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+      selected = if (input$all1) c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
       
     )
   })
   
   observe({
+    
     updateCheckboxGroupInput(
       session, 'Sources2', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
-      selected = if (input$all2) c("Biomass", "Coal", "Gas", "Hydro", "None", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
+      selected = if (input$renewable2) c("Biomass", "Hydro", "Solar", "Wind", "Geothermal")
+    )
+    
+  })
+  
+  observe({
+    
+    updateCheckboxGroupInput(
+      session, 'Sources2', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      selected = if (input$nonrenew2) c("Coal", "Gas", "Nuclear", "Oil", "Other")
+    )
+    
+  })
+  
+  observe({
+    updateCheckboxGroupInput(
+      session, 'Sources2', choices = c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal"),
+      selected = if (input$all2) c("Biomass", "Coal", "Gas", "Hydro", "Nuclear", "Oil", "Other", "Solar", "Wind", "Geothermal")
       
     )
   })
